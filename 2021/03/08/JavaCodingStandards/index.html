@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Ucm">
+
+
+
+    <meta name="description" content="Wubba Lubba Dub Dub">
+
+
+
+<title>Java Coding Standards&lt;1&gt; | Ucm blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Home</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Home</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Java Coding Standards&lt;1&gt;</h1>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="Purpose"><a href="#Purpose" class="headerlink" title="Purpose"></a>Purpose</h1><p>Coding standard is important to our daily work. This series of articles will document the Java coding stardards.</p>
+<h1 id="Principles"><a href="#Principles" class="headerlink" title="Principles"></a>Principles</h1><p>We should strive to write code that is:</p>
+<ul>
+<li>Thread-safe</li>
+<li>Reusable</li>
+<li>Easy to maintain</li>
+<li>Easy to test</li>
+<li>Easy to comprehend</li>
+</ul>
+<h1 id="General"><a href="#General" class="headerlink" title="General"></a>General</h1><ul>
+<li>Use <a target="_blank" rel="noopener" href="https://projectlombok.org/">Lombok</a> where possible to reduce the amount of boiler-plate Java code.<ul>
+<li>The most commonly used annotations are <code>@RequiredArgsConstructor</code>, <code>@Data</code>, <code>@Builder</code> and <code>@Log4j2</code>.</li>
+<li>Reminder: Lombok is a build dependency, NOT a library dependency.</li>
+</ul>
+</li>
+<li>When logging, use Log4j2, not Log4j, or Slf4j. We would like to minimize the number of dependencies a package has.</li>
+</ul>
+<h1 id="Style-and-Formatting"><a href="#Style-and-Formatting" class="headerlink" title="Style and Formatting"></a>Style and Formatting</h1><ul>
+<li>All new packages must depend on and enforce <a target="_blank" rel="noopener" href="https://github.com/Ucmmm/Checkstyle">Checkstyle</a> for main, test, and integTest code.</li>
+<li>For new code:<ul>
+<li>Lines should not exceed 120 characters.</li>
+<li>Use spaces instead of tabs for indentation.</li>
+<li>Class imports should be alphabetized. Imports are split into two groups, static and non-static.</li>
+</ul>
+</li>
+</ul>
+<h1 id="Code-Commits"><a href="#Code-Commits" class="headerlink" title="Code Commits"></a>Code Commits</h1><ul>
+<li>Before pusing, REBASE (not MERGE) on top of mainline to avlid commit like “Merge branch ‘branch name’ into mainline” in the commit history. These extraneous commits are unnecessary and only serves to boost your “number of lines added” count (falsely, in most cases).</li>
+<li>Commits that are pushed must be build-able and not break any existing functionality.</li>
+<li>Commit messages should adhere to these <a target="_blank" rel="noopener" href="https://chris.beams.io/posts/git-commit/">guidelines</a>.</li>
+</ul>
+<h1 id="Logging"><a href="#Logging" class="headerlink" title="Logging"></a>Logging</h1><ul>
+<li>Log important decision points (eg. method entry/exist) at the INFO level. In most cases, it is better to over-log than not log at all.</li>
+<li>If sensitive information can be logged safely for debugging purpose, do so only at the DEBUG level. These logs may be useful in Devo (Alpha/Beta) where DEBUT logs are visible.</li>
+<li>If exceptions are thrown, log it only at the ERROR level in the “highest” point possible in the method call chain. We do not want to pollute our logs with duplicate error messages and stack traces.</li>
+<li>If logs are being output to CloudWatch in JSON format, consider what data can reside in the Logger’s contextMap (eg. requestId, customerId). This extra context data is output for every log statement within the scope of the request. The implication of this is that it no longer becomes necessary to create log messages in the format of “For customerId X, Y happened”. Instead, we can simply say, “Y happened” if the customerId is present in the contextMap.</li>
+</ul>
+<h1 id="Excepitons"><a href="#Excepitons" class="headerlink" title="Excepitons"></a>Excepitons</h1><ul>
+<li>Use defined <code>YourException</code> package to ensure consistent error classfication throughout the entrie code base regardless of application. These are all RuntimeExceptions so they do not pollute our method signatures.<ul>
+<li>For all new code, the expectation is that every exception thrown is either a <code>YourException</code> or some other RuntimeException which should be treated as an internal failure.</li>
+<li>These exceptions are not meant to be exposed to clients of our services. Instead, services should have their own set of exceptions defined that map from the <code>YourException</code>.</li>
+</ul>
+</li>
+<li>If a new Exception needs to be added, extend the most specific <code>YourException</code> possible (NonRetryableException, or RetryableException at the very minimum).<ul>
+<li>Please place a new exception understand orgin sub folder if it derives from NonRetryableException or RetryableException).</li>
+</ul>
+</li>
+<li>When possible, throw the most specific <code>YourException</code> available.</li>
+<li>When possible, do not treat thrown exceptions as normal/expected behavior.<ul>
+<li>For example, do not load an S3 object and treat a thrown <code>NoSuchKeyException</code> as a valid outcome. Instead, call an API to determine whether the object exist first and then load the object.</li>
+<li>Similarly, do not catch <code>NullPointerException</code>. Instead check for null-ity at the source.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Hierarchy"><a href="#Hierarchy" class="headerlink" title="Hierarchy"></a>Hierarchy</h2><ul>
+<li><code>YourException</code> (abstract)<ul>
+<li>NonRetryableException<ul>
+<li>InternalException: Exceptions caused by issues in our logic (eg. invalid input when calling a service).</li>
+<li>NonRetryableDependencyException: Non-retryable exceptions thrown by a downstream service.</li>
+</ul>
+</li>
+<li>RetryableException<ul>
+<li>RetryableDependencyException: Retryable exceptions thrown by a downstream service</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Java/"># Java</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2021/02/26/%E5%8D%9A%E5%AE%A2%E6%90%AC%E5%AE%B6%E4%BA%86/">博客搬家了</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Ucm</span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
