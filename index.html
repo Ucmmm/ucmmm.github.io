@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
 <meta name="viewport"
@@ -46,12 +47,31 @@
 
 
 <meta name="generator" content="Hexo 5.4.0"></head>
+
 <body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
     <div class="wrapper">
         <header>
     <nav class="navbar">
         <div class="container">
-            <div class="navbar-header header-logo"><a href="/">Home</a></div>
+            <div class="navbar-header header-logo"><a href="/">Ucm</a></div>
             <div class="menu navbar-right">
                 
                     <a class="menu-item" href="/archives">Posts</a>
@@ -73,7 +93,7 @@
         <div class="container">
             <div class="navbar-header">
                 <div>
-                    <a href="/">Home</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                    <a href="/">Ucm</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
                 </div>
                 <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
             </div>
@@ -105,18 +125,23 @@
         }
     }
 </script>
-        <div class="main">
-            
-    <div class="container">
+            <div class="main">
+                
+    <div class="container profile-container">
     <div class="intro">
         <div class="avatar">
-            <a href="/archives"><img src="/image/avatar.jpg"></a>
+            <a href="/archives"><img src="/image/avatar.jpeg"></a>
         </div>
         <div class="nickname">Ucm</div>
-        <div class="description"><p>To live is to risk it all. <br>Otherwise you are just an inert chunk of randomly assembled molecules drifting wherever the universe blows you.</p>
+        <div class="description"><p>To live is to risk at all. <br/> Otherwise, you are just an inert chunk of randomly assembled molecules drifing wherever the universe blows you.</p>
 </div>
         <div class="links">
             
+                
+                    <a class="link-item" title="Blog" href="/archives">
+                        
+                        
+                    </a>
                 
             
         </div>
@@ -124,8 +149,8 @@
 </div>
 
 
-        </div>
-        <footer id="footer" class="footer">
+            </div>
+            <footer id="footer" class="footer">
     <div class="copyright">
         <span>© Ucm</span>
     </div>
@@ -133,4 +158,5 @@
 
     </div>
 </body>
+
 </html>

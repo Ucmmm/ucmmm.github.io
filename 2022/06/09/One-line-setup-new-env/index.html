@@ -15,7 +15,7 @@
 
 
 
-<title>Java Coding Standards&lt;1&gt; | Ucm blog</title>
+<title>One-line setup new env | Ucm blog</title>
 
 
 
@@ -192,7 +192,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Java Coding Standards&lt;1&gt;</h1>
+            <h1 class="post-title">One-line setup new env</h1>
             
                 <div class="post-meta">
                     
@@ -201,7 +201,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">March 8, 2021&nbsp;&nbsp;0:38:03</a>
+                        Date: <a href="#">June 9, 2022&nbsp;&nbsp;11:21:58</a>
                         </span>
                     
                     
@@ -210,74 +210,9 @@
         </header>
 
         <div class="post-content">
-            <h1 id="Purpose"><a href="#Purpose" class="headerlink" title="Purpose"></a>Purpose</h1><p>Coding standard is important to our daily work. This series of articles will document the Java coding stardards.</p>
-<h1 id="Principles"><a href="#Principles" class="headerlink" title="Principles"></a>Principles</h1><p>We should strive to write code that is:</p>
-<ul>
-<li>Thread-safe</li>
-<li>Reusable</li>
-<li>Easy to maintain</li>
-<li>Easy to test</li>
-<li>Easy to comprehend</li>
-</ul>
-<h1 id="General"><a href="#General" class="headerlink" title="General"></a>General</h1><ul>
-<li>Use <a target="_blank" rel="noopener" href="https://projectlombok.org/">Lombok</a> where possible to reduce the amount of boiler-plate Java code.<ul>
-<li>The most commonly used annotations are <code>@RequiredArgsConstructor</code>, <code>@Data</code>, <code>@Builder</code> and <code>@Log4j2</code>.</li>
-<li>Reminder: Lombok is a build dependency, NOT a library dependency.</li>
-</ul>
-</li>
-<li>When logging, use Log4j2, not Log4j, or Slf4j. We would like to minimize the number of dependencies a package has.</li>
-</ul>
-<h1 id="Style-and-Formatting"><a href="#Style-and-Formatting" class="headerlink" title="Style and Formatting"></a>Style and Formatting</h1><ul>
-<li>All new packages must depend on and enforce <a target="_blank" rel="noopener" href="https://github.com/Ucmmm/Checkstyle">Checkstyle</a> for main, test, and integTest code.</li>
-<li>For new code:<ul>
-<li>Lines should not exceed 120 characters.</li>
-<li>Use spaces instead of tabs for indentation.</li>
-<li>Class imports should be alphabetized. Imports are split into two groups, static and non-static.</li>
-</ul>
-</li>
-</ul>
-<h1 id="Code-Commits"><a href="#Code-Commits" class="headerlink" title="Code Commits"></a>Code Commits</h1><ul>
-<li>Before pusing, REBASE (not MERGE) on top of mainline to avlid commit like “Merge branch ‘branch name’ into mainline” in the commit history. These extraneous commits are unnecessary and only serves to boost your “number of lines added” count (falsely, in most cases).</li>
-<li>Commits that are pushed must be build-able and not break any existing functionality.</li>
-<li>Commit messages should adhere to these <a target="_blank" rel="noopener" href="https://chris.beams.io/posts/git-commit/">guidelines</a>.</li>
-</ul>
-<h1 id="Logging"><a href="#Logging" class="headerlink" title="Logging"></a>Logging</h1><ul>
-<li>Log important decision points (eg. method entry/exist) at the INFO level. In most cases, it is better to over-log than not log at all.</li>
-<li>If sensitive information can be logged safely for debugging purpose, do so only at the DEBUG level. These logs may be useful in Devo (Alpha/Beta) where DEBUT logs are visible.</li>
-<li>If exceptions are thrown, log it only at the ERROR level in the “highest” point possible in the method call chain. We do not want to pollute our logs with duplicate error messages and stack traces.</li>
-<li>If logs are being output to CloudWatch in JSON format, consider what data can reside in the Logger’s contextMap (eg. requestId, customerId). This extra context data is output for every log statement within the scope of the request. The implication of this is that it no longer becomes necessary to create log messages in the format of “For customerId X, Y happened”. Instead, we can simply say, “Y happened” if the customerId is present in the contextMap.</li>
-</ul>
-<h1 id="Excepitons"><a href="#Excepitons" class="headerlink" title="Excepitons"></a>Excepitons</h1><ul>
-<li>Use defined <code>YourException</code> package to ensure consistent error classfication throughout the entrie code base regardless of application. These are all RuntimeExceptions so they do not pollute our method signatures.<ul>
-<li>For all new code, the expectation is that every exception thrown is either a <code>YourException</code> or some other RuntimeException which should be treated as an internal failure.</li>
-<li>These exceptions are not meant to be exposed to clients of our services. Instead, services should have their own set of exceptions defined that map from the <code>YourException</code>.</li>
-</ul>
-</li>
-<li>If a new Exception needs to be added, extend the most specific <code>YourException</code> possible (NonRetryableException, or RetryableException at the very minimum).<ul>
-<li>Please place a new exception understand orgin sub folder if it derives from NonRetryableException or RetryableException).</li>
-</ul>
-</li>
-<li>When possible, throw the most specific <code>YourException</code> available.</li>
-<li>When possible, do not treat thrown exceptions as normal/expected behavior.<ul>
-<li>For example, do not load an S3 object and treat a thrown <code>NoSuchKeyException</code> as a valid outcome. Instead, call an API to determine whether the object exist first and then load the object.</li>
-<li>Similarly, do not catch <code>NullPointerException</code>. Instead check for null-ity at the source.</li>
-</ul>
-</li>
-</ul>
-<h2 id="Hierarchy"><a href="#Hierarchy" class="headerlink" title="Hierarchy"></a>Hierarchy</h2><ul>
-<li><code>YourException</code> (abstract)<ul>
-<li>NonRetryableException<ul>
-<li>InternalException: Exceptions caused by issues in our logic (eg. invalid input when calling a service).</li>
-<li>NonRetryableDependencyException: Non-retryable exceptions thrown by a downstream service.</li>
-</ul>
-</li>
-<li>RetryableException<ul>
-<li>RetryableDependencyException: Retryable exceptions thrown by a downstream service</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+            <p><code>省得网上每次去找</code></p>
+<h3 id="Python-env"><a href="#Python-env" class="headerlink" title="Python env"></a>Python env</h3><h4 id="Conda"><a href="#Conda" class="headerlink" title="Conda"></a>Conda</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL -o install_conda.sh https:&#x2F;&#x2F;repo.continuum.io&#x2F;miniconda&#x2F;Miniconda3-latest-Linux-x86_64.sh \</span><br><span class="line">    &amp;&amp; sudo sh install_conda.sh -b -p &#x2F;opt&#x2F;conda \</span><br><span class="line">    &amp;&amp; export PATH&#x3D;&#x2F;opt&#x2F;conda&#x2F;bin:$&#123;PATH&#125; \</span><br><span class="line">    &amp;&amp; rm install_conda.sh &amp;&amp; &#x2F;opt&#x2F;conda&#x2F;bin&#x2F;conda clean -ya \</span><br><span class="line">    &amp;&amp; conda init bash</span><br></pre></td></tr></table></figure>
+
 
         </div>
 
@@ -288,7 +223,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/Java/"># Java</a>
+                        <a href="/tags/Python/"># Python</a>
                     
                         
                 </span>
@@ -301,10 +236,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2022/06/09/One-line-setup-new-env/">One-line setup new env</a>
+                <a class="prev" rel="prev" href="/2022/10/10/Enable%20conda%20environment%20for%20OpenSSH%20Server%20in%20Windows%20remotely/">Enable conda environment for OpenSSH Server in Windows remotely</a>
             
             
-            <a class="next" rel="next" href="/2021/02/26/%E5%8D%9A%E5%AE%A2%E6%90%AC%E5%AE%B6%E4%BA%86/">博客搬家了</a>
+            <a class="next" rel="next" href="/2021/03/08/JavaCodingStandards/">Java Coding Standards<1></a>
             
         </section>
 
