@@ -15,7 +15,7 @@
 
 
 
-<title>Enable conda environment for OpenSSH Server in Windows remotely | Ucm blog</title>
+<title>Troubleshooting Gallery | Ucm blog</title>
 
 
 
@@ -129,11 +129,70 @@
                 <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6;    // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function () {
+            tocbot.refresh(obj_merge(tocbot_default_config, { hasInnerContainers: true }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function () {
+        tocbot.init(obj_merge(tocbot_default_config, { collapseDepth: 1 }));
+    });
+
+    function expandToc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, { collapseDepth: expanded ? 1 : DEPTH_MAX }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Enable conda environment for OpenSSH Server in Windows remotely</h1>
+            <h1 class="post-title">Troubleshooting Gallery</h1>
             
                 <div class="post-meta">
                     
@@ -142,7 +201,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">October 10, 2022&nbsp;&nbsp;2:24:01</a>
+                        Date: <a href="#">April 1, 2023&nbsp;&nbsp;22:47:58</a>
                         </span>
                     
                     
@@ -151,20 +210,12 @@
         </header>
 
         <div class="post-content">
-            <p>My team recently got 2 new Keem Bay devices. I set them up in my office and enabled ssh for them for remote access. The default shell for OpenSSH in Windows is CMD. But in my case, I want to use conda environment.</p>
-<p>After installing the Miniconda Windows in my new device, Miniconda automatically created an <code>.ink</code> file, and the only way to open <code>Anaconda Powershell Prompt</code> is searching it and click that shortcut, then it will pop-up a new <code>Anaconda Powershell Prompt</code> shell. But this approach won’t work if I remotely accessed this device. So the question here is how to change the default shell for Windows OpenSSH.</p>
-<p>Microsoft officially introduces a solution for this: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_server_configuration#configuring-the-default-shell-for-openssh-in-windows">https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_server_configuration#configuring-the-default-shell-for-openssh-in-windows</a>. It lists an example command how to set default shell to Powershell </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">New-ItemProperty -Path &quot;HKLM:\SOFTWARE\OpenSSH&quot; -Name DefaultShell -Value &quot;C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -PropertyType String -Force</span><br></pre></td></tr></table></figure>
+            <p><code>省得网上每次去找</code></p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><h3 id="Enable-conda-env-in-jupyter-notebook"><a href="#Enable-conda-env-in-jupyter-notebook" class="headerlink" title="Enable conda env in jupyter notebook"></a>Enable conda env in jupyter notebook</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda install nb_conda_kernels</span><br><span class="line">conda install ipykernel</span><br></pre></td></tr></table></figure>
 
-<p>This command will change the default shell for OpenSSH to Powershell. But for <code>Anaconda Powershell Prompt</code>, I couldn’t find an valid <code>.exe</code> for <code>Anaconda Powershell Prompt</code>. I tried several possible <code>conda.exe</code> files and none of them work.</p>
-<p>By looking into the <code>Anaconda Powershell Prompt</code> shortcut, the target for this shortcut is:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%windir%\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy ByPass -NoExit -Command &quot;&amp; &#39;C:\ProgramData\Miniconda3\shell\condabin\conda-hook.ps1&#39; ; conda activate &#39;C:\ProgramData\Miniconda3&#39; &quot;</span><br></pre></td></tr></table></figure>
+<h3 id="Jupyter-Notebook-500-Internal-Server-Error"><a href="#Jupyter-Notebook-500-Internal-Server-Error" class="headerlink" title="Jupyter Notebook 500 : Internal Server Error"></a>Jupyter Notebook 500 : Internal Server Error</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install --upgrade jupyterhub</span><br><span class="line">pip install --upgrade nbconvert</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>It will invote Powershell and run the following command to activate conda environment. So the solution is straightforward. When sshing and logging into the remote device with Powershell, just run </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp; &#39;C:\ProgramData\Miniconda3\shell\condabin\conda-hook.ps1&#39; ; conda activate &#39;C:\ProgramData\Miniconda3&#39;</span><br></pre></td></tr></table></figure>
-
-<p>Then you will see you are in conda <code>(base)</code> environment already.</p>
-
+<h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><h3 id="Host-key-verification-failed"><a href="#Host-key-verification-failed" class="headerlink" title="Host key verification failed."></a>Host key verification failed.</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keyscan -t rsa github.com &gt;&gt; ~&#x2F;.ssh&#x2F;known_hosts</span><br></pre></td></tr></table></figure>
         </div>
 
         
@@ -173,6 +224,12 @@
                 <span>Tag(s):</span>
                 <span class="tag">
                     
+                    
+                        <a href="/tags/Python/"># Python</a>
+                    
+                        <a href="/tags/Git/"># Git</a>
+                    
+                        
                 </span>
             </div>
             <div>
@@ -183,10 +240,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2023/04/01/Troubleshooting/">Troubleshooting Gallery</a>
             
-            
-            <a class="next" rel="next" href="/2022/06/09/One-line-setup-new-env/">One-line setup new env</a>
+            <a class="next" rel="next" href="/2022/10/10/Enable%20conda%20environment%20for%20OpenSSH%20Server%20in%20Windows%20remotely/">Enable conda environment for OpenSSH Server in Windows remotely</a>
             
         </section>
 
